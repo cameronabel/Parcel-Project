@@ -5,13 +5,13 @@ using System;
 namespace Parcel.Tests
 {
   [TestClass]
-  public class ParcelTests
+  public class PackageTests
   {
     [TestMethod]
-    public void ParcelConstructor_CreatesInstanceOfParcel_Parcel()
+    public void PackageConstructor_CreatesInstanceOfPackage_Package()
     {
-      Parcel newParcel = new Parcel();
-      Assert.AreEqual(typeof(Parcel), newParcel.GetType());
+      Package newPackage = new Package();
+      Assert.AreEqual(typeof(Package), newPackage.GetType());
     }
   }
 }
