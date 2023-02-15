@@ -22,7 +22,7 @@ namespace Parcel.Models
 
     public int CostToShip()
     {
-      return 0;
+      return Volume() * 2;
     }
   }
 }
