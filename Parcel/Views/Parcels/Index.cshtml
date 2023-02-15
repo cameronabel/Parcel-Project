@@ -10,7 +10,23 @@
       crossorigin="anonymous">
   </head>
   <body>
-    <h1>Welcome Peppy Parcel Shipping!</h1>
-    <a href = "/parcels/new"> Calculate the price of a new parcel! </a>
+    <h1>Cost for your parcel:</h1>
+    <ul>
+        <li>
+          Weight: @Model.Weight
+        </li>
+        <li>
+          Length: @Model.Length
+        </li>
+        <li>
+          Height: @Model.Height
+        </li>
+        <li>
+          Width: @Model.Width
+        </li>
+    </ul>
+    <div> Volume: @Model.Volume() </div>
+    <div> Cost: @Model.CostToShip() </div>
+
   </body>
 </html>
