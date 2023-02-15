@@ -7,51 +7,55 @@ namespace Parcel.Tests
   [TestClass]
   public class PackageTests
   {
+    Package testPackage;
+    [TestInitialize]
+    public void TestInitialize()
+    {
+      testPackage = new Package(3, 4, 5, 10);
+    }
+
     [TestMethod]
     public void PackageConstructor_CreatesInstanceOfPackage_Package()
     {
-      Package newPackage = new Package(3, 4, 5, 10);
-      Assert.AreEqual(typeof(Package), newPackage.GetType());
+      Assert.AreEqual(typeof(Package), testPackage.GetType());
     }
     [TestMethod]
     public void GetLength_ReturnsLength_Int()
     {
-      int length = 3;
-      Package newPackage = new Package(length, 4, 5, 10);
-      int result = newPackage.Length;
-      Assert.AreEqual(length, result);
+      int result = testPackage.Length;
+      Assert.AreEqual(3, result);
     }
     [TestMethod]
     public void GetWidth_ReturnsWidth_Int()
     {
-      int width = 4;
-      Package newPackage = new Package(3, width, 5, 10);
-      int result = newPackage.Width;
-      Assert.AreEqual(width, result);
+      int result = testPackage.Width;
+      Assert.AreEqual(4, result);
     }
     [TestMethod]
     public void GetHeight_ReturnsHeight_Int()
     {
-      int height = 5;
-      Package newPackage = new Package(3, 4, height, 10);
-      int result = newPackage.Height;
-      Assert.AreEqual(height, result);
+      int result = testPackage.Height;
+      Assert.AreEqual(5, result);
     }
     [TestMethod]
     public void GetWeight_ReturnsWeight_Int()
     {
-      int weight = 10;
-      Package newPackage = new Package(3, 4, 5, weight);
-      int result = newPackage.Weight;
-      Assert.AreEqual(weight, result);
+      int result = testPackage.Weight;
+      Assert.AreEqual(10, result);
     }
     [TestMethod]
     public void GetVolume_ReturnsVolume_Int()
     {
       int volume = 60;
-      Package newPackage = new Package(3, 4, 5, 10);
-      int result = newPackage.Volume();
+      int result = testPackage.Volume();
       Assert.AreEqual(volume, result);
+    }
+    [TestMethod]
+    public void GetCostToShip_ReturnsCost_Cost()
+    {
+      int cost = 120;
+      int result = testPackage.CostToShip();
+      Assert.AreEqual(cost, result);
     }
   }
 }
