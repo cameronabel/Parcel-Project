@@ -118,7 +118,35 @@ public class Package
 
   public void Save()
   {
+    MySqlConnection conn = new MySqlConnection(DBConfiguration.ConnectionString);
+    conn.Open();
 
+    MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+
+    // Begin new code
+
+    cmd.CommandText = "INSERT INTO parcels (length, width, height, weight) VALUES (@PackageLength, @PackageWidth, @PackageHeight, @PackageWeight);";
+
+    cmd.Parameters.AddWithValue("@PackageLength", this.Length);
+    cmd.Parameters.AddWithValue("@PackageWidth", this.Width);
+    cmd.Parameters.AddWithValue("@PackageHeight", this.Height);
+    cmd.Parameters.AddWithValue("@PackageWeight", this.Weight);
+
+    // MySqlParameter param = new MySqlParameter();
+    // param.ParameterName = "@ItemDescription";
+    // param.Value = this.Description;
+    // cmd.Parameters.Add(param); 
+
+    cmd.ExecuteNonQuery();
+    Id = (int)cmd.LastInsertedId;
+
+    // End new code
+
+    conn.Close();
+    if (conn != null)
+    {
+      conn.Dispose();
+    }
   }
 }
 
