@@ -82,5 +82,13 @@ namespace Parcel.Tests
       List<Package> result = Package.GetAll();
       CollectionAssert.AreEqual(newList, result);
     }
+
+    [TestMethod]
+    public void Equals_ReturnsTrueIfDescriptionsAreTheSame_Item()
+    {
+      Package firstPackage = testPackage;
+      Package secondPackage = new Package(3, 4, 5, 10);
+      Assert.AreEqual(firstPackage, secondPackage);
+    }
   }
 }
