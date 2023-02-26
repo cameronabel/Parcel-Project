@@ -16,6 +16,7 @@ namespace Parcel.Controllers
     public ActionResult Index(int length, int width, int height, int weight)
     {
       Package newPackage = new Package(length, width, height, weight);
+      newPackage.Save();
       return View(newPackage);
     }
 

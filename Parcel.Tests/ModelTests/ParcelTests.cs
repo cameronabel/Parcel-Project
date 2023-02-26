@@ -99,7 +99,22 @@ namespace Parcel.Tests
       List<Package> result = Package.GetAll();
       List<Package> testList = new List<Package> { testPackage };
       CollectionAssert.AreEqual(testList, result);
-
     }
+
+    [TestMethod]
+    public void Find_ReturnsCorrectItemFromDatabase_Package()
+    {
+      //Arrange
+      Package newPackage = testPackage;
+      newPackage.Save();
+      Package newPackage2 = new Package(3, 4, 5, 10);
+      newPackage2.Save();
+
+      //Act
+      Package foundPackage = Package.Find(newPackage.Id);
+      //Assert
+      Assert.AreEqual(newPackage, foundPackage);
+    }
+
   }
 }
