@@ -90,5 +90,16 @@ namespace Parcel.Tests
       Package secondPackage = new Package(3, 4, 5, 10);
       Assert.AreEqual(firstPackage, secondPackage);
     }
+
+    [TestMethod]
+    public void Save_SavesToDatabase_PackageList()
+    {
+
+      testPackage.Save();
+      List<Package> result = Package.GetAll();
+      List<Package> testList = new List<Package> { testPackage };
+      CollectionAssert.AreEqual(testList, result);
+
+    }
   }
 }

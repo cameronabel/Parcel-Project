@@ -115,6 +115,11 @@ public class Package
   {
     return Id.GetHashCode();
   }
+
+  public void Save()
+  {
+
+  }
 }
 
 
