@@ -1,12 +1,29 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Parcel.Models;
+using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections.Generic;
 
 namespace Parcel.Tests
 {
   [TestClass]
-  public class PackageTests
+  public class PackageTests : IDisposable
   {
+    public IConfiguration Configuration { get; set; }
+
+    public void Dispose()
+    {
+      Package.ClearAll();
+    }
+
+    public PackageTests()
+    {
+      IConfigurationBuilder builder = new ConfigurationBuilder()
+          .AddJsonFile("appsettings.json");
+      Configuration = builder.Build();
+      DBConfiguration.ConnectionString = Configuration["ConnectionStrings:TestConnection"];
+    }
+
     Package testPackage;
     [TestInitialize]
     public void TestInitialize()
@@ -56,6 +73,14 @@ namespace Parcel.Tests
       int cost = 120;
       int result = testPackage.CostToShip();
       Assert.AreEqual(cost, result);
+    }
+
+    [TestMethod]
+    public void GetAll_ReturnsEmptyListFromDatabase_PackageList()
+    {
+      List<Package> newList = new List<Package> { };
+      List<Package> result = Package.GetAll();
+      CollectionAssert.AreEqual(newList, result);
     }
   }
 }
