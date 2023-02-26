@@ -1,5 +1,7 @@
 using MySqlConnector;
 using System.Collections.Generic;
+using System.Reflection;
+using System;
 
 namespace Parcel.Models;
 
@@ -9,7 +11,7 @@ public class Package
   public int Width { get; set; }
   public int Height { get; set; }
   public int Weight { get; set; }
-  public int ID { get; set; }
+  public int Id { get; set; }
 
   public Package(int length, int width, int height, int weight)
   {
@@ -20,7 +22,7 @@ public class Package
   }
   public Package(int id, int length, int width, int height, int weight)
   {
-    ID = id;
+    Id = id;
     Length = length;
     Width = width;
     Height = height;
@@ -85,4 +87,35 @@ public class Package
     }
     return allPackages;
   }
+
+  public override bool Equals(System.Object otherPackage)
+  {
+    if (!(otherPackage is Package))
+    {
+      return false;
+    }
+    else
+    {
+      Package newPackage = (Package)otherPackage;
+      // bool descriptionEquality = (this.Height == newObject.Height );
+      // return descriptionEquality;
+      foreach (PropertyInfo prop in newPackage.GetType().GetProperties())
+      {
+
+        if ((int)prop.GetValue(this) != (int)prop.GetValue(newPackage))
+        {
+          return false;
+        }
+      }
+      return true;
+    }
+  }
+
+  public override int GetHashCode()
+  {
+    return Id.GetHashCode();
+  }
 }
+
+
+
