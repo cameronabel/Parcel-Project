@@ -40,9 +40,45 @@ public class Package
   }
   public static Package Find(int searchId)
   {
-    // Temporarily returning placeholder Package to get beyond compiler errors until we refactor to work with database.
-    Package placeholderPackage = new Package(3, 4, 5, 10);
-    return placeholderPackage;
+    // We open a connection.
+    MySqlConnection conn = new MySqlConnection(DBConfiguration.ConnectionString);
+    conn.Open();
+
+    // We create MySqlCommand object and add a query to its CommandText property. 
+    // We always need to do this to make a SQL query.
+    MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+    cmd.CommandText = "SELECT * FROM parcels WHERE id = @ThisId;";
+
+    cmd.Parameters.AddWithValue("@ThisId", searchId);
+
+    // We use the ExecuteReader() method because our query will be returning results and 
+    // we need this method to read these results. 
+    // This is in contrast to the ExecuteNonQuery() method, which 
+    // we use for SQL commands that don't return results like our Save() method.
+    MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+    int packageId = 0;
+    int packageHeight = 0;
+    int packageLength = 0;
+    int packageWidth = 0;
+    int packageWeight = 0;
+
+    while (rdr.Read())
+    {
+      packageId = rdr.GetInt32(0);
+      packageLength = rdr.GetInt32(1);
+      packageWidth = rdr.GetInt32(2);
+      packageHeight = rdr.GetInt32(3);
+      packageWeight = rdr.GetInt32(4);
+    }
+    Package foundPackage = new Package(packageId, packageLength, packageWidth, packageHeight, packageWeight);
+
+    // We close the connection.
+    conn.Close();
+    if (conn != null)
+    {
+      conn.Dispose();
+    }
+    return foundPackage;
   }
   public static void ClearAll()
   {
